@@ -4,12 +4,6 @@
 #if!defined GRAFO
 #define GRAFO
 
-typedef struct no *No;
-struct no {
-    int atual; // vertice atual
-    No prox; // proximo no
-};
-
 struct Grafo {
     int linhas; // numero de linhas
     int colunas; // numero de colunas
@@ -17,7 +11,7 @@ struct Grafo {
     int numVertices; // numero de vertices
     int numArcos; // numero de arcos
 
-    No* adj; // lista de adjacencia
+    int** adj; // matriz de adjacencias
 };
 typedef struct Grafo* Grafo;
 
@@ -31,18 +25,26 @@ typedef struct Grafo* Grafo;
 Grafo criaGrafo(int, int);
 
 /**
+ * @brief Cria uma matriz de adjacencias
+ * @param int numero de linhas
+ * @param int numero de colunas
+ * @return int** 
+ */
+int **criaMatriz(int, int);
+
+/**
  * @brief Insere um arco no inicio da lista de adjacencia
  * @param struct Grafo* grafo
- * @param int origem
- * @param int destino
+ * @param int coordenada x
+ * @param int coordenada y
  */
 void insereArco(Grafo, int, int);
 
 /**
  * @brief Retira um arco da lista de adjacencia
  * @param struct Grafo* grafo
- * @param int origem
- * @param int vertice a ser retirado
+ * @param int coordenada x
+ * @param int coordenada y
  */
 void retiraArco(Grafo, int, int);
 
@@ -53,19 +55,22 @@ void retiraArco(Grafo, int, int);
 int vazio(Grafo);
 
 /**
- * @brief Insere um no no inicio da lista de adjacencia
- * @param int vertice
- * @param No lista
- * @return No*
+ * @brief Insere um ao contador de arcos
+ * @param Grafo grafo
  */
-No insereNo(int, No);
+void insereNo(Grafo);
 
 /**
- * @brief Retira um no da lista de adjacencia
- * @param No* lista
- * @param int vertice
- * @return No*
+ * @brief Retira um ao contador de arcos
+ * @param Grafo grafo
  */
+void retiraNo(Grafo);
 
+/**
+ * @brief Percorre o grafo em profundidade
+ * @param Grafo grafo
+ * @param int vertice de origem
+ */
+void percuroemprofundidade(Grafo g, int origem);
 
 #endif

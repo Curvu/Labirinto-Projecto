@@ -75,7 +75,7 @@ void geraLabirinto(struct Grafo* grafo, int inicio, int fim) {
 
 int main() {
     int incio = 2, fim = 1;
-    struct Grafo* grafo = criaGrafo(4, 4);
+    struct Grafo* grafo = criaGrafo(3, 4);
 
     // printGraph(grafo);
 

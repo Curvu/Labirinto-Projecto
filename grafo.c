@@ -12,8 +12,7 @@ Grafo criaGrafo(int linhas, int colunas) {
     grafo->colunas = colunas;
     grafo->numVertices = vertices;
     grafo->numArcos = 0;
-    grafo->adj = malloc(vertices * sizeof(struct No*)); // aloca a lista de adjacencia
-    for (int i = 0; i < vertices; i++) grafo->adj[i] = NULL; // inicializa a lista de adjacencia com NULL
+    grafo->adj = criaMatriz(vertices, vertices);
 
     // gera a lista de adjacencia
     /*
@@ -22,43 +21,41 @@ Grafo criaGrafo(int linhas, int colunas) {
         08 09 10 11
         12 13 14 15
 
-        00 -> 01 -> 04
-        01 -> 00 -> 02 -> 05
-        02 -> 01 -> 03 -> 06
-        03 -> 02 -> 07
-        04 -> 00 -> 05 -> 08
-        05 -> 01 -> 04 -> 06 -> 09
-        06 -> 02 -> 05 -> 07 -> 10
-        07 -> 03 -> 06 -> 11
-        08 -> 04 -> 09 -> 12
-        09 -> 05 -> 08 -> 10 -> 13
-        10 -> 06 -> 09 -> 11 -> 14
-        11 -> 07 -> 10 -> 15
-        12 -> 08 -> 13
-        13 -> 09 -> 12 -> 14
-        14 -> 10 -> 13 -> 15
-        15 -> 11 -> 14
+        ⁰ ¹ ² ³ ⁴ ...
+        ¹ 0 1 0 0
+        ² 1 0 1 0
+        ³ 0 1 0 1
+        ⁴ 0 0 1 0
+        ...
     */
     for (int i = 0; i < vertices; i++) {
-        if (i % colunas != 0) insereArco(grafo, i, i - 1); // insere o arco para a esquerda
-        if (i % colunas != colunas - 1) insereArco(grafo, i, i + 1); // insere o arco para a direita
-        if (i >= colunas) insereArco(grafo, i, i - colunas); // insere o arco para cima
+        if (i % colunas != 0) insereArco(grafo, i, i - 1);             // insere o arco para a esquerda
+        if (i % colunas != colunas - 1) insereArco(grafo, i, i + 1);   // insere o arco para a direita
+        if (i >= colunas) insereArco(grafo, i, i - colunas);           // insere o arco para cima
         if (i < vertices - colunas) insereArco(grafo, i, i + colunas); // insere o arco para baixo
     }
 
 
-    // printa a lista de adjacencia
+    // print matriz de adjacencia
     for (int i = 0; i < vertices; i++) {
-        printf("%02d", i);
-        No no = grafo->adj[i];
-        while (no != NULL) {
-            printf(" -> %02d", no->atual);
-            no = no->prox;
+        for (int j = 0; j < vertices; j++) {
+            printf("%d ", grafo->adj[i][j]);
         }
         printf("\n");
     }
 
     return grafo;
+}
+
+int **criaMatriz(int linhas, int colunas) {
+    int **matriz = malloc(linhas * sizeof(int*));
+    for (int i = 0; i < linhas; i++) {
+        matriz[i] = malloc(colunas * sizeof(int));
+        for (int j = 0; j < colunas; j++) {
+            matriz[i][j] = 0;
+        }
+    }
+    return matriz;
 }
 
 int vazio(struct Grafo* grafo) {
@@ -67,13 +64,50 @@ int vazio(struct Grafo* grafo) {
 }
 
 void insereArco(Grafo grafo, int v1, int v2) {
-    grafo->adj[v1] = insereNo(v2, grafo->adj[v1]); // insere o arco na lista de adjacencia
-    grafo->numArcos++; // incrementa o numero de arcos
+    grafo->adj[v1][v2] = 1;
+    insereNo(grafo);
 }
 
-No insereNo(int v, No prox) {
-    No novo = malloc(sizeof(struct no));
-    novo->atual = v;
-    novo->prox = prox;
-    return novo;
+void retiraArco(Grafo grafo, int v1, int v2) {
+    grafo->adj[v1][v2] = 0;
+    retiraNo(grafo);
+}
+
+void insereNo(Grafo grafo) {
+    grafo->numArcos++;
+}
+
+void retiraNo(Grafo grafo) {
+    grafo->numArcos--;
+}
+
+void percuroemprofundidade(Grafo g, int origem){
+	// int i,j,pos;
+	
+	// Pilha p;
+	
+	// int marcados[g]; //LISTA DE NOS JA VISITADOS 
+	
+	
+	// for(i=0;i < MAXNOS;i++) marcados[i]=0;
+    // criarpilha(&p); //INDICIALIZA A PILHA
+	// pos = origem;
+	// printf("%d",pos);
+	// marcados[pos]=1;
+	
+    // do{
+	// 	j=0;
+	// 	while(((g.matrizdj[pos][j]==0)||(marcados[j]==1) )&& (j<g.numNos)) j++;
+	// 	if(j!=g.numNos){
+	// 		if(marcados[j]==0) {
+	// 			printf("%d",j);
+	// 			marcados[j] = 1;
+    //         }
+    //         push(pos, &p);
+    //         pos=j;
+    //     } else{
+    //         pos=top(p);
+    //         pop(&p);
+    //     }
+    // } while(!pilhavazia(p));
 }
