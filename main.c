@@ -116,25 +116,25 @@ void dfs(Grafo grafo, int origem, char **labirinto) {
             visitados[vertice] = 1; // marca o vertice como visitado
             
             // remove as paredes
-            if (vertice - 1 >= 0 && vertice % grafo->colunas != 0) { // se o vertice adjacente for o da esquerda
+            if (vertice - 1 >= 0 && vertice % grafo->colunas != 0 && !visitados[vertice - 1]) { // se o vertice adjacente for o da esquerda
                 labirinto[(vertice/grafo->colunas)*2 + 1][(vertice%grafo->colunas)*4] = ' ';
                 labirinto[(vertice/grafo->colunas)*2 + 1][(vertice%grafo->colunas)*4 + 1] = ' ';
                 labirinto[(vertice/grafo->colunas)*2 + 1][(vertice%grafo->colunas)*4 + 2] = ' ';
             }
-            if (vertice + 1 < grafo->numVertices && (vertice + 1) % grafo->colunas != 0) { // se o vertice adjacente for o da direita
+            if (vertice + 1 < grafo->numVertices && (vertice + 1) % grafo->colunas != 0 && !visitados[vertice + 1]) { // se o vertice adjacente for o da direita
                 labirinto[(vertice/grafo->colunas)*2 + 1][(vertice%grafo->colunas)*4 + 2] = ' ';
                 labirinto[(vertice/grafo->colunas)*2 + 1][(vertice%grafo->colunas)*4 + 3] = ' ';
                 labirinto[(vertice/grafo->colunas)*2 + 1][(vertice%grafo->colunas)*4 + 4] = ' ';
             }
-            if (vertice - grafo->colunas >= 0) { // se o vertice adjacente for o de cima
-                labirinto[(vertice/grafo->colunas)*2][(vertice%grafo->colunas)*4 + 1] = ' ';
-                labirinto[(vertice/grafo->colunas)*2][(vertice%grafo->colunas)*4 + 2] = ' ';
-                labirinto[(vertice/grafo->colunas)*2][(vertice%grafo->colunas)*4 + 3] = ' ';
-            }
-            if (vertice + grafo->colunas < grafo->numVertices) { // se o vertice adjacente for o de baixo
+            if (vertice + grafo->colunas < grafo->numVertices && !visitados[vertice + grafo->colunas]) { // se o vertice adjacente for o de baixo
                 labirinto[(vertice/grafo->colunas)*2 + 2][(vertice%grafo->colunas)*4 + 1] = ' ';
                 labirinto[(vertice/grafo->colunas)*2 + 2][(vertice%grafo->colunas)*4 + 2] = ' ';
                 labirinto[(vertice/grafo->colunas)*2 + 2][(vertice%grafo->colunas)*4 + 3] = ' ';
+            }
+            if (vertice - grafo->colunas >= 0 && !visitados[vertice - grafo->colunas]) { // se o vertice adjacente for o de cima
+                labirinto[(vertice/grafo->colunas)*2][(vertice%grafo->colunas)*4 + 1] = ' ';
+                labirinto[(vertice/grafo->colunas)*2][(vertice%grafo->colunas)*4 + 2] = ' ';
+                labirinto[(vertice/grafo->colunas)*2][(vertice%grafo->colunas)*4 + 3] = ' ';
             }
             
 
