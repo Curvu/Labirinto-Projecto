@@ -70,7 +70,8 @@ void retiraNo(Grafo);
  * @brief Percorre o grafo em profundidade
  * @param Grafo grafo
  * @param int vertice de origem
+ * @param char** labirinto
  */
-void percuroemprofundidade(Grafo g, int origem);
+// void dfs(Grafo, int, char**);
 
 #endif

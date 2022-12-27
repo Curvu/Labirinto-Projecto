@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "pilha.h"
 
 Grafo criaGrafo(int linhas, int colunas) {
     if (linhas <= 0 || colunas <= 0) return NULL; // se o numero de linhas ou colunas for menor ou igual a 0, retorna NULL
@@ -37,12 +38,12 @@ Grafo criaGrafo(int linhas, int colunas) {
 
 
     // print matriz de adjacencia
-    for (int i = 0; i < vertices; i++) {
-        for (int j = 0; j < vertices; j++) {
-            printf("%d ", grafo->adj[i][j]);
-        }
-        printf("\n");
-    }
+    // for (int i = 0; i < vertices; i++) {
+    //     for (int j = 0; j < vertices; j++) {
+    //         printf("%d ", grafo->adj[i][j]);
+    //     }
+    //     printf("\n");
+    // }
 
     return grafo;
 }
@@ -81,33 +82,28 @@ void retiraNo(Grafo grafo) {
     grafo->numArcos--;
 }
 
-void percuroemprofundidade(Grafo g, int origem){
-	// int i,j,pos;
-	
-	// Pilha p;
-	
-	// int marcados[g]; //LISTA DE NOS JA VISITADOS 
-	
-	
-	// for(i=0;i < MAXNOS;i++) marcados[i]=0;
-    // criarpilha(&p); //INDICIALIZA A PILHA
-	// pos = origem;
-	// printf("%d",pos);
-	// marcados[pos]=1;
-	
-    // do{
-	// 	j=0;
-	// 	while(((g.matrizdj[pos][j]==0)||(marcados[j]==1) )&& (j<g.numNos)) j++;
-	// 	if(j!=g.numNos){
-	// 		if(marcados[j]==0) {
-	// 			printf("%d",j);
-	// 			marcados[j] = 1;
-    //         }
-    //         push(pos, &p);
-    //         pos=j;
-    //     } else{
-    //         pos=top(p);
-    //         pop(&p);
-    //     }
-    // } while(!pilhavazia(p));
-}
+// void dfs(Grafo grafo, int origem, char **labirinto) {
+//     int visitados[grafo->numVertices]; // vetor de visitados
+//     for (int i = 0; i < grafo->numVertices; i++) visitados[i] = 0; // inicializa o vetor de visitados com 0
+// 	// cria uma pilha
+//     Pilha pilha = criaPilha();
+//     push(&pilha, origem); // insere o vertice de origem na pilha
+
+//     while (!pilhaVazia(pilha)) { // enquanto a pilha nao estiver vazia
+//         int vertice = top(pilha); // pega o vertice do topo da pilha
+//         pop(&pilha); // remove o vertice do topo da pilha
+//         if (!visitados[vertice]) { // se o vertice nao foi visitado
+//             visitados[vertice] = 1; // marca como visitado
+//             // Apaga o caminho, coluna ou linha
+
+
+
+            
+//             for (int i = 0; i < grafo->numVertices; i++) { // para cada vertice adjacente ao vertice atual
+//                 if (grafo->adj[vertice][i]) { // se o vertice for adjacente
+//                     push(&pilha, i); // insere o vertice adjacente na pilha
+//                 }
+//             }
+//         }
+//     }
+// }
