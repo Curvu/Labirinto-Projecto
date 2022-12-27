@@ -23,7 +23,7 @@ void reachR(Grafo grafo, int v, char** labirinto) {
     // randomiza escolhe uma direção randomica para o vertice
     int direcao = rand() % 4;
     int direcoes[4] = {0, 1, 2, 3};
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) { // embaralha o vetor de direcoes
         int aux = direcoes[i];
         int j = rand() % 4;
         direcoes[i] = direcoes[j];
@@ -67,31 +67,6 @@ void reachR(Grafo grafo, int v, char** labirinto) {
     }
 }
 
-            // if (v + 1 == i) { // se o vertice adjacente for o da direita
-            //     labirinto[(v/grafo->colunas)*2 + 1][(v%grafo->colunas)*4 + 2] = ' ';
-            //     labirinto[(v/grafo->colunas)*2 + 1][(v%grafo->colunas)*4 + 3] = ' ';
-            //     labirinto[(v/grafo->colunas)*2 + 1][(v%grafo->colunas)*4 + 4] = ' ';
-            // }
-            // if (v - 1 == i) { // se o vertice adjacente for o da esquerda
-            //     labirinto[(v/grafo->colunas)*2 + 1][(v%grafo->colunas)*4] = ' ';
-            //     labirinto[(v/grafo->colunas)*2 + 1][(v%grafo->colunas)*4 + 1] = ' ';
-            //     labirinto[(v/grafo->colunas)*2 + 1][(v%grafo->colunas)*4 + 2] = ' ';
-            // }
-            // if (v + grafo->colunas == i) { // se o vertice adjacente for o de baixo
-            //     labirinto[(v/grafo->colunas)*2 + 2][(v%grafo->colunas)*4 + 1] = ' ';
-            //     labirinto[(v/grafo->colunas)*2 + 2][(v%grafo->colunas)*4 + 2] = ' ';
-            //     labirinto[(v/grafo->colunas)*2 + 2][(v%grafo->colunas)*4 + 3] = ' ';
-            // }
-            // if (v - grafo->colunas == i) { // se o vertice adjacente for o de cima
-            //     labirinto[(v/grafo->colunas)*2][(v%grafo->colunas)*4 + 1] = ' ';
-            //     labirinto[(v/grafo->colunas)*2][(v%grafo->colunas)*4 + 2] = ' ';
-            //     labirinto[(v/grafo->colunas)*2][(v%grafo->colunas)*4 + 3] = ' ';
-            // }
-    //         reachR(grafo, i, labirinto);
-    // random direction
-    
-// }
-
 int GRAPHreach(Grafo grafo, int inicio, int fim, char** labirinto) {
     for (int i = 0; i < grafo->numVertices; i++) visited[i] = 0;
     reachR(grafo, inicio, labirinto);
@@ -108,57 +83,83 @@ void dfs(Grafo grafo, int origem, char **labirinto) {
 
     int hold[4] = {-1, -1, -1, -1};
 
+    int v;
     while (!pilhaVazia(pilha)) {
-        int vertice = top(pilha); // pega o vertice do topo da pilha
-        pop(&pilha); // remove o vertice do topo da pilha
+        else init = 0;
+        if (visitados[v] == 0) {
+            visitados[v] = 1; // marca o vertice como visitado
+            int k = 0; // contador de adjacencias
+            for (int i = 0; i < 4; i++) hold[i] = -1; // limpa o vetor hold
 
-        if (!visitados[vertice]) { // se o vertice não foi visitado
-            visitados[vertice] = 1; // marca o vertice como visitado
-            
-            // remove as paredes
-            if (vertice - 1 >= 0 && vertice % grafo->colunas != 0 && !visitados[vertice - 1]) { // se o vertice adjacente for o da esquerda
-                labirinto[(vertice/grafo->colunas)*2 + 1][(vertice%grafo->colunas)*4] = ' ';
-                labirinto[(vertice/grafo->colunas)*2 + 1][(vertice%grafo->colunas)*4 + 1] = ' ';
-                labirinto[(vertice/grafo->colunas)*2 + 1][(vertice%grafo->colunas)*4 + 2] = ' ';
-            }
-            if (vertice + 1 < grafo->numVertices && (vertice + 1) % grafo->colunas != 0 && !visitados[vertice + 1]) { // se o vertice adjacente for o da direita
-                labirinto[(vertice/grafo->colunas)*2 + 1][(vertice%grafo->colunas)*4 + 2] = ' ';
-                labirinto[(vertice/grafo->colunas)*2 + 1][(vertice%grafo->colunas)*4 + 3] = ' ';
-                labirinto[(vertice/grafo->colunas)*2 + 1][(vertice%grafo->colunas)*4 + 4] = ' ';
-            }
-            if (vertice + grafo->colunas < grafo->numVertices && !visitados[vertice + grafo->colunas]) { // se o vertice adjacente for o de baixo
-                labirinto[(vertice/grafo->colunas)*2 + 2][(vertice%grafo->colunas)*4 + 1] = ' ';
-                labirinto[(vertice/grafo->colunas)*2 + 2][(vertice%grafo->colunas)*4 + 2] = ' ';
-                labirinto[(vertice/grafo->colunas)*2 + 2][(vertice%grafo->colunas)*4 + 3] = ' ';
-            }
-            if (vertice - grafo->colunas >= 0 && !visitados[vertice - grafo->colunas]) { // se o vertice adjacente for o de cima
-                labirinto[(vertice/grafo->colunas)*2][(vertice%grafo->colunas)*4 + 1] = ' ';
-                labirinto[(vertice/grafo->colunas)*2][(vertice%grafo->colunas)*4 + 2] = ' ';
-                labirinto[(vertice/grafo->colunas)*2][(vertice%grafo->colunas)*4 + 3] = ' ';
-            }
-            
-
-            // percorre a lista de adjacencia do vertice
+            // percorre a matriz de adjacencia do vertice
             for (int i = 0; i < grafo->numVertices; i++) {
-                if (grafo->adj[vertice][i] != 0) { // se o vertice for adjacente do vertice do topo da pilha
+                if (grafo->adj[v][i] != 0) { // se o vertice for adjacente do vertice do topo da pilha
                     for (int j = 0; j < 4; j++) {
                         if (hold[j] == -1) {
-                            hold[j] = i;
+                            hold[j] = i;    
+                            k++;
                             break;
                         }
                     }
                 }
             }
 
-            int direcao = rand() % 4; // gera um numero aleatorio entre 0 e 3
-            while (hold[direcao] == -1) direcao = rand() % 4; // enquanto o vertice adjacente for -1
-            
-            for (int i = 0; i < 4; i++) {
-                if (hold[i] != -1) push(&pilha, hold[i]); // insere os vertices adjacentes na pilha
-                hold[i] = -1; // limpa holder
+            // adiciona os elementos do vetor hold na pilha de forma aleatoria
+            for (int i = 0; i < k; i++) {
+                int random = rand() % k;
+                while (hold[random] == -1) random = rand() % k;
+                if (visitados[hold[random]] == 0) push(&pilha, hold[random]);
+                hold[random] = -1;
             }
-        }
 
+            imprimePilha(pilha);
+
+            // calcula a direção entre hold[random] e v
+            int direcao = 0;
+            int topo = top(pilha);
+            if (topo == v - 1) direcao = 0; // esquerda
+            if (topo == v + 1) direcao = 1; // direita
+            if (topo == v - grafo->colunas) direcao = 2; // cima
+            if (topo == v + grafo->colunas) direcao = 3; // baixo
+
+            if (direcao == 0) printf("quadrado:%d -> esquerda -> %d\n", v, topo);
+            if (direcao == 1) printf("quadrado:%d -> direita -> %d\n", v, topo);
+            if (direcao == 2) printf("quadrado:%d -> cima -> %d\n", v, topo);
+            if (direcao == 3) printf("quadrado:%d -> baixo -> %d\n", v, topo);
+
+
+            /* Apaga Caminho */
+            int linha = (v/grafo->colunas)*2;
+            int coluna = (v%grafo->colunas)*4;
+
+            if (direcao == 0) { // esquerda
+                if (v % grafo->colunas != 0) { // se não for a primeira coluna
+                    for (int i = 0; i < 3; i++) labirinto[linha + 1][coluna + i] = ' ';
+                    v = v - 1;
+                }
+            }
+            if (direcao == 1) { // direita
+                if (v % grafo->colunas != grafo->colunas - 1) { // se não for a ultima coluna
+                    for (int i = 2; i < 5; i++) labirinto[linha + 1][coluna + i] = ' ';
+                    v = v + 1;
+                }
+            }
+            if (direcao == 2) { // cima
+                if (v >= grafo->colunas) { // se não for a primeira linha
+                    for (int i = 0; i < 3; i++) labirinto[linha + i][coluna + 1] = ' ';
+                    v = v - grafo->colunas;
+                }
+            }
+            if (direcao == 3) { // baixo
+                if (v < grafo->numVertices - grafo->colunas) { // se não for a ultima linha
+                    for (int i = 2; i < 5; i++) labirinto[linha + i][coluna + 1] = ' ';
+                    v = v + grafo->colunas;
+                }
+            }
+        } else {
+            // se o vertice já foi visitado, remove ele da pilha
+            // pop(&pilha);
+        }
     }
 }
 
