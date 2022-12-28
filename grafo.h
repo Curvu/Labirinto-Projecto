@@ -72,6 +72,6 @@ void retiraNo(Grafo);
  * @param int vertice de origem
  * @param char** labirinto
  */
-// void dfs(Grafo, int, char**);
+void dfs(Grafo, int, char**);
 
 #endif
