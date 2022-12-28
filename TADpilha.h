@@ -45,6 +45,4 @@ void pop(Pilha*);
  */
 int pilhaVazia(Pilha);
 
-void imprimePilha(Pilha);
-
 #endif
